@@ -20,10 +20,6 @@ class GameRepository(context: Context) {
         gameDao.insertGame(product)
     }
 
-    suspend fun deleteGame(product: Game) {
-        gameDao.deleteGame(product)
-    }
-
     suspend fun deleteAllGames() {
         gameDao.deleteAllGames()
     }
