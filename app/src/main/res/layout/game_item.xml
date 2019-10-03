@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
-        android:id="@+id/tvResult"
+        android:id="@+id/tvResultHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -41,7 +41,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+        app:layout_constraintTop_toBottomOf="@+id/tvResultHistory" />
 
     <ImageView
         android:id="@+id/ivComputer"

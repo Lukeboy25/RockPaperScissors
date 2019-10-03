@@ -4,4 +4,8 @@
     <string name="instructions_select_rock_paper_or_scissors_to_play">Instructions: select rock, paper or scissors to play.</string>
     <string name="welcome">Welcome</string>
     <string name="title_activity_game_history">GameHistory</string>
+    <string name="all_time_statistics">Your all time statistics</string>
+    <string name="win">Win:</string>
+    <string name="draw">Draw:</string>
+    <string name="lost">Lost:</string>
 </resources>

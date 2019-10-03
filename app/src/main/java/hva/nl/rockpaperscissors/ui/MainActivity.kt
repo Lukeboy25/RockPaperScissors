@@ -1,7 +1,7 @@
 package hva.nl.rockpaperscissors.ui
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
-import androidx.room.TypeConverter
 import hva.nl.rockpaperscissors.R
 import hva.nl.rockpaperscissors.database.GameRepository
 import hva.nl.rockpaperscissors.model.Game
@@ -17,6 +16,8 @@ import hva.nl.rockpaperscissors.model.GameEnum
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.content_main.ivComputer
+import kotlinx.android.synthetic.main.content_main.ivPlayer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ const val VIEW_HISTORY_REQUEST_CODE = 100
 class MainActivity : AppCompatActivity() {
     private lateinit var gameRepository: GameRepository
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,10 +51,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         gameRepository = GameRepository(this)
+
+        getStatistics()
     }
 
-    lateinit var context: Context
-
+    @SuppressLint("SetTextI18n")
     @TargetApi(Build.VERSION_CODES.O)
     private fun newGame(playerMove : Int) {
         val computerMove = (0..2).shuffled().first()
@@ -69,13 +72,13 @@ class MainActivity : AppCompatActivity() {
                 gameRepository.insertGame(game)
             }
 
-            tvWin.text = game.result
+            tvResult.text = game.result
             ivComputer.setImageDrawable(getDrawable(game.computerMove.imageUrl))
             ivPlayer.setImageDrawable(getDrawable(game.playerMove.imageUrl))
         }
+        getStatistics()
     }
 
-    @TypeConverter
     private fun getEnumType(move : Int) : GameEnum {
         if(move == 0) {
             return GameEnum.ROCK
@@ -83,6 +86,16 @@ class MainActivity : AppCompatActivity() {
             return GameEnum.PAPER
         }
         return GameEnum.SCISSORS
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getStatistics() {
+        CoroutineScope(Dispatchers.Main).launch {
+            tvStatistics.text = getString(R.string.all_time_statistics)
+            tvWin.text = getString(R.string.win) + gameRepository.getAllWinGames()
+            tvDraw.text = getString(R.string.draw) + gameRepository.getAllDrawGames()
+            tvLost.text = getString(R.string.lost) + gameRepository.getAllLostGames()
+        }
     }
 
     private fun calculateWin(playerMove : Int, computerMove : Int) : String {
@@ -118,4 +131,8 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, VIEW_HISTORY_REQUEST_CODE)
     }
 
+    override fun onResume() {
+        getStatistics()
+        super.onResume()
+    }
 }

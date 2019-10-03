@@ -16,6 +16,18 @@ class GameRepository(context: Context) {
         return gameDao.getAllGames()
     }
 
+    suspend fun getAllWinGames(): Int {
+        return gameDao.getAllWinGames()
+    }
+
+    suspend fun getAllDrawGames(): Int {
+        return gameDao.getAllDrawGames()
+    }
+
+    suspend fun getAllLostGames(): Int {
+        return gameDao.getAllLostGames()
+    }
+
     suspend fun insertGame(product: Game) {
         gameDao.insertGame(product)
     }

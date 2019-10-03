@@ -34,7 +34,7 @@ class GameAdapter(private val products: List<Game>) : RecyclerView.Adapter<GameA
             itemView.tvDate.text = (game.date).toString()
             itemView.ivComputer.setImageDrawable(context.getDrawable(game.computerMove.imageUrl))
             itemView.ivPlayer.setImageDrawable(context.getDrawable(game.playerMove.imageUrl))
-            itemView.tvResult.text = game.result
+            itemView.tvResultHistory.text = game.result
         }
     }
 }
