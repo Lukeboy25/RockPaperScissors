@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        getStatistics()
         super.onResume()
+        getStatistics()
     }
 }
